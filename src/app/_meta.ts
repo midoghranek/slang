@@ -34,7 +34,10 @@ const meta: MetaRecord = {
   },
   money: {
     title: 'Money & Hustle'
-  }
+  },
+  top2025: {
+    title: '2025 Most Used'
+  },
 };
  
 export default meta;
