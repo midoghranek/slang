@@ -38,6 +38,9 @@ const meta: MetaRecord = {
   top2025: {
     title: '2025 Most Used'
   },
+  vocabulary: {
+    title: 'Vocabulary'
+  }
 };
  
 export default meta;
