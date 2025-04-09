@@ -96,7 +96,7 @@ const PaginationComponent = ({ pages }: PaginationProps) => {
 
 const Pagination = (props: PaginationProps) => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div />}>
       <PaginationComponent {...props} />
     </Suspense>
   );
