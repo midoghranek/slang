@@ -1,7 +1,8 @@
 "use client";
 
+import { createPagination } from "@/app/_helpers";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useLayoutEffect, useState } from "react";
+import { Suspense, useLayoutEffect, useMemo, useState } from "react";
 
 type PaginationProps = {
   pages: React.ReactNode[];
@@ -35,6 +36,12 @@ const PaginationComponent = ({ pages }: PaginationProps) => {
     }
   }, [queryPage, pages.length]);
 
+  const pagination = useMemo(() => {
+    if (!pages.length) return [];
+    const totalPages = pages.length;
+    return createPagination(totalPages, currentPage);
+  }, [pages.length, currentPage]);
+
   return (
     <div
       style={{
@@ -55,37 +62,44 @@ const PaginationComponent = ({ pages }: PaginationProps) => {
       <div className="mb-4">{pages[currentPage - 1]}</div>
       <nav>
         <ul className="flex" style={{ marginTop: "2rem" }}>
-          {pages.map((page, idx) => (
+          {pagination.map((page, idx) => (
             <li key={idx}>
-              <button
-                className={`px-3 py-1 rounded ${
-                  idx + 1 === currentPage
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200"
-                }`}
-                style={{
-                  backgroundColor:
-                    idx + 1 === currentPage ? "#3b82f6" : "transparent",
-                  color: idx + 1 === currentPage ? "#ffffff" : "inherit",
-                  width: "2rem",
-                  height: "2rem",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: "8px",
-                  border: "none",
-                  cursor: "pointer",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                  transition: "background-color 0.3s ease",
-                  marginInline: "4px",
-                  outline: "none",
-                }}
-                onClick={() => handlePageChange(idx + 1)}
-                disabled={page === currentPage}
-              >
-                {idx + 1}
-              </button>
+              {page === "..." ? (
+                <span
+                  style={{
+                    padding: "0 8px",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {page}
+                </span>
+              ) : (
+                <button
+                  style={{
+                    backgroundColor:
+                      page === currentPage ? "#3b82f6" : "transparent",
+                    color: page === currentPage ? "#ffffff" : "inherit",
+                    width: "2rem",
+                    height: "2rem",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "8px",
+                    border: "none",
+                    cursor: "pointer",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    transition: "background-color 0.3s ease",
+                    marginInline: "4px",
+                    outline: "none",
+                  }}
+                  onClick={() => handlePageChange(page as number)}
+                  disabled={page === currentPage}
+                >
+                  {page}
+                </button>
+              )}
             </li>
           ))}
         </ul>
