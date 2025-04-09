@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Footer, Layout, Navbar } from 'nextra-theme-docs'
-import { Head } from 'nextra/components'
-import { getPageMap } from 'nextra/page-map'
-import 'nextra-theme-docs/style.css'
-import './global.css';
+import { Footer, Layout, Navbar } from "nextra-theme-docs";
+import { Head } from "nextra/components";
+import { getPageMap } from "nextra/page-map";
+import "nextra-theme-docs/style.css";
+import "./global.css";
+import WordVoice from "@/app/_components/WordVoice";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +16,8 @@ const navbar = (
     logo={<b>🗽 American Slang Dictionary</b>}
     // ... Your additional navbar options
   />
-)
-const footer = <Footer>MIT {new Date().getFullYear()} © Slang.</Footer>
+);
+const footer = <Footer>MIT {new Date().getFullYear()} © Slang.</Footer>;
 
 export default async function RootLayout({
   children,
@@ -25,29 +26,30 @@ export default async function RootLayout({
 }>) {
   return (
     <html
-    // Not required, but good for SEO
-    lang="en"
-    // Required to be set
-    dir="ltr"
-    // Suggested by `next-themes` package https://github.com/pacocoursey/next-themes#with-app
-    suppressHydrationWarning
-  >
-    <Head
-    // ... Your additional head options
+      // Not required, but good for SEO
+      lang="en"
+      // Required to be set
+      dir="ltr"
+      // Suggested by `next-themes` package https://github.com/pacocoursey/next-themes#with-app
+      suppressHydrationWarning
     >
-      {/* Your additional tags should be passed as `children` of `<Head>` element */}
-    </Head>
-    <body>
-      <Layout
-        navbar={navbar}
-        pageMap={await getPageMap()}
-        footer={footer}
-        docsRepositoryBase="https://github.com/midoghranek/slang/tree/main"
-        // ... Your additional layout options
+      <Head
+      // ... Your additional head options
       >
-        {children}
-      </Layout>
-    </body>
-  </html>
+        {/* Your additional tags should be passed as `children` of `<Head>` element */}
+      </Head>
+      <body>
+        <WordVoice />
+        <Layout
+          navbar={navbar}
+          pageMap={await getPageMap()}
+          footer={footer}
+          docsRepositoryBase="https://github.com/midoghranek/slang/tree/main"
+          // ... Your additional layout options
+        >
+          {children}
+        </Layout>
+      </body>
+    </html>
   );
 }
